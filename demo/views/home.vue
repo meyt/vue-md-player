@@ -71,5 +71,5 @@ export default {
 
 <style lang="stylus">
 .theme--light.application.home
-  background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%) !important
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%) !important
 </style>
