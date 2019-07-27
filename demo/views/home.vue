@@ -65,11 +65,16 @@ export default {
   }
 }`
     }
+  },
+  metaInfo () {
+    return {
+      title: 'vue-md-player demo'
+    }
   }
 }
 </script>
 
 <style lang="stylus">
 .theme--light.application.home
-  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%) !important
+  background-image: linear-gradient(to top, #bdc2e8 0%, #bdc2e8 1%, #e6dee9 100%) !important
 </style>
