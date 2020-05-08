@@ -27,7 +27,9 @@
     "url": "https://github.com/meyt/vue-md-player/issues"
   },
   "homepage": "https://github.com/meyt/vue-md-player#readme",
-  "main": "dist/vue-md-player.js",
+  "main": "dist/vue-md-player.cjs.js",
+  "module": "dist/vue-md-player.js",
+  "unpkg": "dist/vue-md-player.iife.js",
   "dependencies": {},
   "peerDependencies": {
     "lodash": "^4.17.15",

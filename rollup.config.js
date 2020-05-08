@@ -8,7 +8,7 @@ import pkg from './package.json'
 import css from 'rollup-plugin-css-only'
 import stylus from 'rollup-plugin-stylus-compiler'
 
-const external =  Object.keys(pkg.peerDependencies)
+const external = Object.keys(pkg.peerDependencies)
 const extensions = ['.js', '.vue']
 const isProduction = !process.env.ROLLUP_WATCH
 const globals = { vue: 'Vue' }
@@ -27,30 +27,70 @@ const plugins = [
   stylus(),
   css(),
   eslint(lintOpts),
-  svg(),
-  vue({
-    template: {
-      isProduction,
-      compilerOptions: { preserveWhitespace: false }
-    },
-    css: true
-  })
+  svg()
 ]
 
-export default {
-  external,
-  plugins,
-  input: 'src/index.js',
-  output: [
-    {
+export default [
+  // ESM build to be used with webpack/rollup.
+  {
+    external,
+    plugins: [
+      ...plugins,
+      vue({
+        template: {
+          isProduction,
+          compilerOptions: { preserveWhitespace: false }
+        },
+        css: false,
+        compileTemplate: true
+      })
+    ],
+    input: 'src/index.js',
+    output: {
       format: 'esm',
       file: 'dist/vue-md-player.js',
       globals
-    },
-    {
+    }
+  },
+  // SSR build.
+  {
+    external,
+    plugins: [
+      ...plugins,
+      vue({
+        template: {
+          isProduction,
+          compilerOptions: { preserveWhitespace: false, optimizeSSR: true }
+        },
+        css: false,
+        compileTemplate: true
+      })
+    ],
+    input: 'src/index.js',
+    output: {
       format: 'cjs',
       file: 'dist/vue-md-player.cjs.js',
       globals
     }
-  ]
-}
+  },
+  // Browser build.
+  {
+    external,
+    plugins: [
+      ...plugins,
+      vue({
+        template: {
+          isProduction,
+          compilerOptions: { preserveWhitespace: false }
+        }
+      })
+    ],
+    input: 'src/index.js',
+    output: {
+      format: 'iife',
+      file: 'dist/vue-md-player.iife.js',
+      name: 'vueMdPlayer',
+      globals
+    }
+  }
+]
