@@ -8,6 +8,7 @@
   direction: ltr;
   min-height: 80px;
   -webkit-tap-highlight-color: transparent;
+  background: #000;
   .player {
     height: 100%;
     width: 100%;
@@ -75,9 +76,6 @@
       transform: scale(1);
     }
   }
-  &.audio {
-    background-color: #fff;
-  }
   &.video {
     color: rgba(255,255,255,0.85);
     video {
@@ -94,6 +92,19 @@
       left: 50%;
       margin-left: -32px;
       margin-top: -32px;
+    }
+    &.contain {
+      width: 100%;
+      height: 100%;
+      video {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
   }
 }

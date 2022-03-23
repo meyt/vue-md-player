@@ -87,6 +87,10 @@ export default {
     doubleClickFullscreen: {
       type: Boolean,
       default: false
+    },
+    contain: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -110,7 +114,8 @@ export default {
     classes () {
       return {
         'vuemdplayer video': true,
-        'fullscreen': this.fullscreen
+        'fullscreen': this.fullscreen,
+        'contain': !this.fullscreen && this.contain
       }
     },
     durationTime () {
