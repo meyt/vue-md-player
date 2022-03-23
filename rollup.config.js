@@ -6,7 +6,7 @@ import bundleSize from 'rollup-plugin-filesize'
 import resolve from 'rollup-plugin-node-resolve'
 import pkg from './package.json'
 import css from 'rollup-plugin-css-only'
-import stylus from 'rollup-plugin-stylus-compiler'
+import scss from 'rollup-plugin-scss'
 
 const external = Object.keys(pkg.peerDependencies)
 const extensions = ['.js', '.vue']
@@ -15,7 +15,7 @@ const globals = { vue: 'Vue' }
 
 const lintOpts = {
   extensions,
-  exclude: ['**/*.json', '**/*.styl'],
+  exclude: ['**/*.json', '**/*.scss'],
   cache: true,
   throwOnError: true
 }
@@ -24,7 +24,7 @@ const plugins = [
   resolve(),
   bundleSize(),
   commonjs(),
-  stylus(),
+  scss(),
   css(),
   eslint(lintOpts),
   svg()

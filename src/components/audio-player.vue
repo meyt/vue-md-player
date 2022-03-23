@@ -1,36 +1,36 @@
-<template lang="pug">
-  div.player-container.audio
+<template>
+  <div class="vuemdplayer audio">
+    <div class="player">
+      <audio ref="media">
+        <slot v-if="canLoad" />
+      </audio>
+    </div>
 
-    // Player
-    div.player
-      audio(ref="media")
-        slot(v-if="canLoad")
-
-    // Control Bar
-    div.control-bar.visible
-      scrubber(
+    <!-- Control Bar-->
+    <div class="control-bar visible">
+      <scrubber
         v-model="current"
         :min="0"
         :max="duration"
         light
         @input="seek(current)"
         :loading="isInProgress"
-      )
-      div.layout
-        button.btn(
-          icon
-          large
-          @click="unmuteAndTogglePlay()"
-        )
-          pause-icon(v-if="playing")
-          replay-icon(v-else-if="ended")
-          play-icon(v-else)
-        div.spacer
-        div.flex.times
-          span {{ currentTime }}
-          span &nbsp;/&nbsp;
-          span {{ durationTime }}
-
+      />
+      <div class="layout">
+        <button class="player-btn" icon large @click="unmuteAndTogglePlay()">
+          <pause-icon v-if="playing"/>
+          <replay-icon v-else-if="ended"/>
+          <play-icon v-else />
+        </button>
+        <div class="spacer" />
+        <div class="flex times">
+          <span v-text="currentTime"/>
+          <span>&nbsp;/&nbsp;</span>
+          <span v-text="durationTime"/>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ import replayIcon from '../assets/icons/replay.svg'
 import volumeUpIcon from '../assets/icons/volume-up.svg'
 import volumeOffIcon from '../assets/icons/volume-off.svg'
 import { secondsToTime } from '../helper'
-import '../assets/style.styl'
+import '../assets/style.scss'
 
 export default {
   mixins: [mediaMixin],

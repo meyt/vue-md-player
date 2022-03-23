@@ -1,51 +1,62 @@
-<template lang="pug">
-  div(
+<template>
+  <div
     ref="mediaPlayer"
     @mouseover="onMouseHover"
     @dblclick.prevent="() => doubleClickFullscreen ? toggleFullScreen() : null"
     :class="classes"
-  )
-    // Player
-    div.player(@click.prevent="unmuteOrTogglePlay")
-      video(ref="media" :width="width" :height="height")
-        slot(v-if="canLoad")
+  >
+    <!-- Player-->
+    <div
+      class="player"
+      @click.prevent="unmuteOrTogglePlay"
+    >
+      <video
+        ref="media"
+        :width="width"
+        :height="height"
+      >
+        <slot v-if="canLoad" />
+      </video>
+    </div>
 
-    // Pre-loader
-    preloader.preloader(
+    <!-- Pre-loader-->
+    <preloader
       @click.native="unmuteOrTogglePlay()"
       v-if="isInProgress"
-    )
+    />
 
-    // Control Bar
-    div(:class="{'control-bar': true, 'visible': controlbar || paused}")
-      scrubber(
+    <!-- Control Bar-->
+    <div :class="{'control-bar': true, 'visible': controlbar || paused}">
+      <scrubber
         v-model="current"
         :min="0"
         :max="duration"
         @input="seek(current)"
         :loading="isInProgress"
-      )
-      div.layout
-        button.btn(@click="unmuteAndTogglePlay()")
-          pause-icon(v-if="playing")
-          replay-icon(v-else-if="ended")
-          play-icon(v-else)
-
-        div.spacer
-
-        div.flex.times
-          span {{ currentTime }}
-          span &nbsp;/&nbsp;
-          span {{ durationTime }}
-
-        button.btn(@click="toggleMute()")
-          volume-off-icon(v-if="muted")
-          volume-up-icon(v-else)
-
-        button.btn(@click="toggleFullScreen()")
-          fullscreen-exit-icon(v-if="fullscreen")
-          fullscreen-icon(v-else)
-
+      />
+      <div class="layout">
+        <button class="player-btn" @click="unmuteAndTogglePlay()">
+          <pause-icon v-if="playing"/>
+          <replay-icon v-else-if="ended"/>
+          <play-icon v-else/>
+        </button>
+        <div class="spacer" />
+        <div class="flex times">
+          <span v-text="currentTime" />
+          <span>&nbsp;/&nbsp;</span>
+          <span v-text="durationTime" />
+        </div>
+        <button class="player-btn" @click="toggleMute()">
+          <volume-off-icon v-if="muted"/>
+          <volume-up-icon v-else/>
+        </button>
+        <button class="player-btn" @click="toggleFullScreen()">
+          <fullscreen-exit-icon v-if="fullscreen"/>
+          <fullscreen-icon v-else/>
+        </button>
+      </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -60,7 +71,7 @@ import scrubber from './scrubber.vue'
 import preloader from './preloader.vue'
 import mediaMixin from '../mixin'
 import { secondsToTime } from '../helper'
-import '../assets/style.styl'
+import '../assets/style.scss'
 
 export default {
   mixins: [mediaMixin],
@@ -98,7 +109,7 @@ export default {
   computed: {
     classes () {
       return {
-        'player-container video': true,
+        'vuemdplayer video': true,
         'fullscreen': this.fullscreen
       }
     },

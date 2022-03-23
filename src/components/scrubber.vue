@@ -1,8 +1,9 @@
-<template lang="pug">
-  div(ref="scrubber" :class="{scrubber: true, light: light, loading: loading}")
-    div.bar
-    div.progress(:style="{width: percent + '%'}")
-    div.handler(:style="{left: percent + '%'}")
+<template>
+  <div ref="scrubber" :class="{scrubber: true, light: light, loading: loading}">
+    <div class="bar"/>
+    <div class="progress" :style="{width: percent + '%'}" />
+    <div class="handler" :style="{left: percent + '%'}" />
+  </div>
 </template>
 
 <script>
@@ -101,80 +102,87 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.vuemdplayer .scrubber {
+  margin: 0px 16px -4px;
+  touch-action: none;
+  cursor: pointer;
+  direction: ltr;
+  height: 30px;
+  position: relative;
+  user-select: none;
+  .bar {
+    height: 3px;
+    width: 100%;
+    position: relative;
+    top: 16px;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 5px;
+    transition: height 0.2s;
+  }
+  .progress {
+    height: 3px;
+    width: 0;
+    position: absolute;
+    top: 16px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: height 0.2s;
+  }
+  .handler {
+    background-color: #fff;
+    height: 17px;
+    width: 17px;
+    border-radius: 19px;
+    top: 9px;
+    margin-left: -9px;
+    position: absolute;
+    left: 0;
+    box-shadow: rgba(0,0,0,0.5) 0px 0px 3px;
+    transform: scale(0.3);
+    opacity: 1;
+    transition: transform 125ms cubic-bezier(0.15, 0.75, 0.5, 0.95) 0s;
+  }
+  &:hover {
+    .handler {
+      transform: scale(1);
+    }
+  }
+  &.loading {
+    .handler {
+      top: 10px;
+    }
+    .progress {
+      height: 5px;
+    }
+    .bar {
+      height: 5px;
+      background-color: initial;
+      background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 11px, rgba(255,255,255,0.2) 10px, rgba(255,255,255,0.2) 20px);
+      background-size: 28px 28px;
+      background-repeat: repeat-x;
+      animation: vuemdplayer-scrobberprogress 0.5s linear infinite;
+    }
+  }
+  &.light {
+    .bar {
+      background-color: rgba(0,0,0,0.3);
+    }
+    .progress {
+      background-color: #000;
+    }
+    .handler {
+      background-color: #000;
+    }
+  }
+}
 
-<style lang="stylus">
-.scrubber
-  touch-action: none
-  cursor: pointer
-  direction: ltr
-  height: 30px
-  position: relative
-  user-select: none
-  .bar
-    height: 3px
-    width: 100%
-    position: relative
-    top: 16px
-    background-color: rgba(255, 255, 255, 0.3)
-    border-radius: 5px
-    transition: height 0.2s
-
-  .progress
-    height: 3px
-    width: 0
-    position: absolute
-    top: 16px
-    background-color: #fff
-    border-radius: 5px
-    transition: height 0.2s
-
-  .handler
-    background-color: #fff
-    height: 17px
-    width: 17px
-    border-radius: 19px
-    top: 9px
-    margin-left: -9px
-    position: absolute
-    left: 0
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 3px
-    transform: scale(0.3)
-    opacity: 1
-    transition: transform 125ms cubic-bezier(0.15, 0.75, 0.5, 0.95) 0s
-  &:hover .handler
-    transform: scale(1)
-
-  &.loading
-    .bar, .progress
-      height: 5px
-    .handler
-      top: 10px
-    .bar
-      background-color: initial
-      background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(0, 0, 0, 0.2),
-        rgba(0, 0, 0, 0.2) 11px,
-        rgba(255, 255, 255, 0.2) 10px,
-        rgba(255, 255, 255, 0.2) 20px
-      )
-      background-size: 28px 28px
-      background-repeat: repeat-x
-      animation: scrubberProgressMove .5s linear infinite
-
-  &.light
-    .bar
-      background-color: rgba(0, 0, 0, 0.3)
-
-    .progress
-        background-color: #000
-
-    .handler
-      background-color: #000
-
-@keyframes scrubberProgressMove
-  0%
-    background-position: 0 0
-  100%
-    background-position: 28px 0
+@keyframes vuemdplayer-scrobberprogress {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 28px 0;
+  }
+}
 </style>
