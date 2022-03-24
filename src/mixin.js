@@ -60,6 +60,7 @@ export default {
   },
   mounted () {
     const m = this.$refs.media
+    console.log(m)
     m.controls = false
     m.muted = true
     m.addEventListener('volumechange', this.onVolumeChange)

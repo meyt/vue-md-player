@@ -14,6 +14,7 @@
         ref="media"
         :width="width"
         :height="height"
+        @loadedmetadata="onLoadedMetadata"
       >
         <template v-if="canLoad">
           <source v-if="src" :src="src" :type="srcType"/>
@@ -22,13 +23,29 @@
       </video>
     </div>
 
-    <!-- Pre-loader-->
+    <!-- Watermark -->
+    <div v-if="watermark || $slots.watermark" class="watermark-zone">
+      <img v-if="dummySvg" class="placeholder" :src="dummySvg"/>
+      <div class="watermark-container">
+       <div class="watermark-inner">
+          <slot name="watermark">
+            <img
+              v-if="typeof watermark === 'string'"
+              :src="watermark"
+              class="default-watermark"
+            >
+          </slot>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pre-loader -->
     <preloader
       @click.native="unmuteOrTogglePlay()"
       v-if="isInProgress"
     />
 
-    <!-- Control Bar-->
+    <!-- Control Bar -->
     <div :class="{'control-bar': true, 'visible': controlbar || paused}">
       <scrubber
         v-model="current"
@@ -76,6 +93,16 @@ import mediaMixin from '../mixin'
 import { secondsToTime } from '../helper'
 import '../assets/style.scss'
 
+function createDummySvg (width, height) {
+  return (
+    'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22' +
+    '%20viewBox%3D%220%200%20' + width + '%20' + height + '%22' +
+    '%20width%3D%22' + width + '%22' +
+    '%20height%3D%22' + height + '%22' +
+    '%2F%3E'
+  )
+}
+
 export default {
   mixins: [mediaMixin],
   props: {
@@ -94,6 +121,10 @@ export default {
     contain: {
       type: Boolean,
       default: false
+    },
+    watermark: {
+      type: String,
+      default: null
     }
   },
   components: {
@@ -110,7 +141,8 @@ export default {
   data () {
     return {
       fullscreen: false,
-      controlbar: false
+      controlbar: false,
+      dummySvg: null
     }
   },
   computed: {
@@ -129,6 +161,10 @@ export default {
     }
   },
   methods: {
+    onLoadedMetadata () {
+      const m = this.$refs.media
+      this.dummySvg = createDummySvg(m.videoWidth, m.videoHeight)
+    },
     onMouseHover () {
       this.controlbar = true
       window.clearTimeout(this.__controlbarTimeout)
