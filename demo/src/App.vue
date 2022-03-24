@@ -74,6 +74,10 @@
 import { videoPlayer, audioPlayer } from '../../src/index'
 import examples from './examples'
 import '../../dist/vue-md-player.css'
+import videoSrc from './assets/example.mp4'
+import audioSrc from './assets/example.mp3'
+import watermarkSrc from './assets/watermark.png'
+
 export default {
   components: {
     videoPlayer,
@@ -81,9 +85,9 @@ export default {
   },
   data () {
     return {
-      videoSrc: '/example.mp4',
-      audioSrc: '/example.mp3',
-      watermarkSrc: '/watermark.png',
+      videoSrc,
+      audioSrc,
+      watermarkSrc,
       examples
     }
   },
