@@ -8,14 +8,13 @@ export default {
       type: String,
       default: null
     },
-    autoLoad: {
-      type: Boolean,
-      default: true
+    preload: {
+      type: String,
+      default: 'metadata'
     }
   },
   data () {
     return {
-      canLoad: false,
       loading: false,
       playing: false,
       paused: false,
@@ -60,7 +59,6 @@ export default {
   },
   mounted () {
     const m = this.$refs.media
-    console.log(m)
     m.controls = false
     m.muted = true
     m.addEventListener('volumechange', this.onVolumeChange)
@@ -76,10 +74,7 @@ export default {
     m.addEventListener('durationchange', this.onDurationChange)
     m.addEventListener('progress', this.onProgress)
     m.addEventListener('timeupdate', this.onTimeUpdate)
-    if (this.autoLoad) {
-      this.canLoad = true
-      this.load()
-    }
+    if (this.preload === 'auto') this.load()
   },
   beforeDestroy () {
     const m = this.$refs.media

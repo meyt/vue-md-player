@@ -14,3 +14,25 @@ export function secondsToTime (secs) {
   if (hours === '00') return [minutes, seconds]
   return [hours, minutes, seconds]
 }
+
+export function fitAndCenterObject (objectAspectRatio, viewport) {
+  /**
+   * @param {Number} objectAspectRatio
+   * @param {Object} viewport {top, left, width, height}
+   * @return {Object} {top, left, width, height}
+   */
+  const res = {}
+
+  // Fit board to viewport height
+  res.height = viewport.height
+  res.width = res.height * objectAspectRatio
+  if (res.width > viewport.width) {
+    res.width = viewport.width
+    res.height = res.width / objectAspectRatio
+  }
+
+  // Center the object
+  res.top = viewport.top + (viewport.height / 2 - res.height / 2)
+  res.left = viewport.left + (viewport.width / 2 - res.width / 2)
+  return res
+}

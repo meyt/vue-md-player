@@ -2,10 +2,8 @@
   <div :class="classes">
     <div class="player">
       <audio ref="media">
-        <template v-if="canLoad">
-          <source v-if="src" :src="src" :type="srcType" />
-          <slot />
-        </template>
+        <source v-if="src" :src="src" :type="srcType"/>
+        <slot />
       </audio>
     </div>
 

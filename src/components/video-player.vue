@@ -3,7 +3,9 @@
     ref="mediaPlayer"
     @mouseover="onMouseHover"
     @dblclick.prevent="() => doubleClickFullscreen ? toggleFullScreen() : null"
+    :preload="preload"
     :class="classes"
+    :style="styles"
   >
     <!-- Player-->
     <div
@@ -16,27 +18,14 @@
         :height="height"
         @loadedmetadata="onLoadedMetadata"
       >
-        <template v-if="canLoad">
-          <source v-if="src" :src="src" :type="srcType"/>
-          <slot />
-        </template>
+        <source v-if="src" :src="src" :type="srcType"/>
+        <slot />
       </video>
     </div>
 
-    <!-- Watermark -->
-    <div v-if="watermark || $slots.watermark" class="watermark-zone">
-      <img v-if="dummySvg" class="placeholder" :src="dummySvg"/>
-      <div class="watermark-container">
-       <div class="watermark-inner">
-          <slot name="watermark">
-            <img
-              v-if="typeof watermark === 'string'"
-              :src="watermark"
-              class="default-watermark"
-            >
-          </slot>
-        </div>
-      </div>
+    <!-- Overlay -->
+    <div v-if="$slots.overlay" class="overlay">
+      <slot name="overlay" />
     </div>
 
     <!-- Pre-loader -->
@@ -90,18 +79,8 @@ import fullscreenExitIcon from '../assets/icons/fullscreen-exit.svg'
 import scrubber from './scrubber.vue'
 import preloader from './preloader.vue'
 import mediaMixin from '../mixin'
-import { secondsToTime } from '../helper'
+import { secondsToTime, fitAndCenterObject } from '../helper'
 import '../assets/style.scss'
-
-function createDummySvg (width, height) {
-  return (
-    'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22' +
-    '%20viewBox%3D%220%200%20' + width + '%20' + height + '%22' +
-    '%20width%3D%22' + width + '%22' +
-    '%20height%3D%22' + height + '%22' +
-    '%2F%3E'
-  )
-}
 
 export default {
   mixins: [mediaMixin],
@@ -121,10 +100,6 @@ export default {
     contain: {
       type: Boolean,
       default: false
-    },
-    watermark: {
-      type: String,
-      default: null
     }
   },
   components: {
@@ -142,7 +117,10 @@ export default {
     return {
       fullscreen: false,
       controlbar: false,
-      dummySvg: null
+      videoWidth: 0,
+      videoHeight: 0,
+      containerWidth: 0,
+      containerHeight: 0
     }
   },
   computed: {
@@ -150,7 +128,27 @@ export default {
       return {
         'vuemdplayer video': true,
         'fullscreen': this.fullscreen,
-        'contain': !this.fullscreen && this.contain
+        'contain': this.fullscreen || this.contain
+      }
+    },
+    styles () {
+      let x = 0
+      let y = 0
+      let w = 0
+      let h = 0
+      if (this.containerWidth && this.videoWidth) {
+        const ratio = this.videoWidth / this.videoHeight
+        const res = fitAndCenterObject(ratio, { top: 0, left: 0, width: this.containerWidth, height: this.containerHeight })
+        x = res.left
+        y = res.top
+        w = res.width
+        h = res.height
+      }
+      return {
+        '--layer-top': y + 'px',
+        '--layer-left': x + 'px',
+        '--layer-width': w + 'px',
+        '--layer-height': h + 'px'
       }
     },
     durationTime () {
@@ -160,10 +158,35 @@ export default {
       return secondsToTime(this.current).join(':')
     }
   },
+  mounted () {
+    window.addEventListener('resize', this.onWindowResize)
+    this.onResize()
+
+    document.addEventListener('fullscreenchange', this.onFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', this.onFullscreenChange)
+  },
+  beforeDestroy () {
+    document.removeEventListener('fullscreenchange', this.onFullscreenChange)
+    document.removeEventListener('webkitfullscreenchange', this.onFullscreenChange)
+    window.removeEventListener('resize', this.onWindowResize)
+  },
   methods: {
+    onWindowResize () {
+      clearTimeout(this._resizeRimer)
+      this._resizeRimer = setTimeout(this.onResize, 500)
+    },
+    onFullscreenChange (e) {
+      this.fullscreen = !!document.fullscreenElement
+      setTimeout(this.onResize, 0)
+    },
+    onResize () {
+      this.containerWidth = this.$refs.mediaPlayer.clientWidth
+      this.containerHeight = this.$refs.mediaPlayer.clientHeight
+    },
     onLoadedMetadata () {
       const m = this.$refs.media
-      this.dummySvg = createDummySvg(m.videoWidth, m.videoHeight)
+      this.videoWidth = m.videoWidth
+      this.videoHeight = m.videoHeight
     },
     onMouseHover () {
       this.controlbar = true
@@ -183,6 +206,7 @@ export default {
         document.msExitFullscreen()
       }
       this.fullscreen = false
+      setTimeout(this.onResize, 0)
     },
     enterFullScreen () {
       const el = this.$refs.mediaPlayer
@@ -196,6 +220,7 @@ export default {
         el.msRequestFullscreen()
       }
       this.fullscreen = true
+      setTimeout(this.onResize, 0)
     },
     toggleFullScreen () {
       if (this.fullscreen) {

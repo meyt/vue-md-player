@@ -10,6 +10,10 @@
   -webkit-tap-highlight-color: transparent;
   background: #000;
   color: rgba(255,255,255,0.85);
+  --layer-top: 0;
+  --layer-left: 0;
+  --layer-width: 0;
+  --layer-height: 0;
   .player {
     height: 100%;
     width: 100%;
@@ -77,43 +81,11 @@
       transform: scale(1);
     }
   }
-
-  .watermark-zone {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .overlay {
+    height: 100%;
     width: 100%;
-    height: auto;
     z-index: 0;
-    user-select: none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    .placeholder {
-      width: 100%;
-      display: block;
-    }
-  }
-  .watermark-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .watermark-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: solid 1px red;
     box-sizing: border-box;
-  }
-  .default-watermark {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    max-width: 20%;
-    height: auto;
   }
   &.video {
     video {
@@ -135,14 +107,12 @@
   &.contain {
     width: 100%;
     height: 100%;
-    video {
+    .overlay, .player {
       position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      top: var(--layer-top);
+      left: var(--layer-left);
+      width: var(--layer-width);
+      height: var(--layer-height);
     }
   }
   &.light {
