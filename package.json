@@ -4,7 +4,7 @@
   "description": "Lightweight HTML5 video and audio player component for vuejs",
   "scripts": {
     "dev": "vite --config demo/vite.config.js",
-    "build-demo": "vite build --config demo/vite.config.js ",
+    "build-demo": "vite build --config demo/vite.config.js --base=/vue-md-player/ ",
     "build": "rm -rf ./dist && rollup -c;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
