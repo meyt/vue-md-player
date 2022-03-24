@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "10"
+  - "14"
 
 cache:
   directories:
@@ -11,11 +11,20 @@ install:
 
 script:
   - npm run build
+  - npm run build-demo
 
 deploy:
   - provider: npm
     email: $NPM_API_EMAIL
     api_key: $NPM_API_TOKEN
     skip-cleanup: true
+    on:
+      tags: true
+
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_ACCESS_TOKEN
+    target-branch: gh-pages
+    local-dir: demo/dist
     on:
       tags: true
