@@ -1,5 +1,13 @@
 export default {
   props: {
+    src: {
+      type: String,
+      default: null
+    },
+    srcType: {
+      type: String,
+      default: null
+    },
     autoLoad: {
       type: Boolean,
       default: true

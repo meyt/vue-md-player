@@ -15,7 +15,10 @@
         :width="width"
         :height="height"
       >
-        <slot v-if="canLoad" />
+        <template v-if="canLoad">
+          <source v-if="src" :src="src" :type="srcType"/>
+          <slot />
+        </template>
       </video>
     </div>
 

@@ -2,7 +2,10 @@
   <div :class="classes">
     <div class="player">
       <audio ref="media">
-        <slot v-if="canLoad" />
+        <template v-if="canLoad">
+          <source v-if="src" :src="src" :type="srcType" />
+          <slot />
+        </template>
       </audio>
     </div>
 
@@ -12,7 +15,6 @@
         v-model="current"
         :min="0"
         :max="duration"
-        light
         @input="seek(current)"
         :loading="isInProgress"
       />
