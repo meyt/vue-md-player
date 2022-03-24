@@ -3,15 +3,13 @@
     ref="mediaPlayer"
     @mouseover="onMouseHover"
     @dblclick.prevent="() => doubleClickFullscreen ? toggleFullScreen() : null"
+    @click.prevent="unmuteOrTogglePlay"
     :preload="preload"
     :class="classes"
     :style="styles"
   >
     <!-- Player-->
-    <div
-      class="player"
-      @click.prevent="unmuteOrTogglePlay"
-    >
+    <div class="player">
       <video
         ref="media"
         :width="width"
@@ -29,13 +27,10 @@
     </div>
 
     <!-- Pre-loader -->
-    <preloader
-      @click.native="unmuteOrTogglePlay()"
-      v-if="isInProgress"
-    />
+    <preloader v-if="isInProgress" />
 
     <!-- Control Bar -->
-    <div :class="{'control-bar': true, 'visible': controlbar || paused}">
+    <div :class="{'control-bar': true, 'visible': controlbar || paused}" @click.prevent>
       <scrubber
         v-model="current"
         :min="0"
@@ -83,6 +78,7 @@ import { secondsToTime, fitAndCenterObject } from '../helper'
 import '../assets/style.scss'
 
 export default {
+  name: 'VideoPlayer',
   mixins: [mediaMixin],
   props: {
     width: {
