@@ -4,6 +4,7 @@ import svg from 'rollup-plugin-vue-inline-svg'
 import bundleSize from 'rollup-plugin-filesize'
 import resolve from 'rollup-plugin-node-resolve'
 import css from 'rollup-plugin-css-only'
+import { terser } from "rollup-plugin-terser"
 import scss from 'rollup-plugin-scss'
 import pkg from './package.json'
 
@@ -15,7 +16,9 @@ const plugins = [
   resolve(),
   bundleSize(),
   commonjs(),
-  scss(),
+  scss({
+    outputStyle: 'compressed',
+  }),
   css(),
   svg()
 ]
@@ -57,11 +60,19 @@ export default [
       })
     ],
     input: 'src/index.js',
-    output: {
-      format: 'cjs',
-      file: 'dist/vue-md-player.cjs.js',
-      globals
-    }
+    output: [
+      {
+        format: 'cjs',
+        file: 'dist/vue-md-player.cjs.js',
+        globals
+      },
+      {
+        format: 'cjs',
+        file: 'dist/vue-md-player.cjs.min.js',
+        globals,
+        plugins: [terser()]
+      }
+    ]
   },
   // Browser build.
   {
@@ -76,11 +87,20 @@ export default [
       })
     ],
     input: 'src/index.js',
-    output: {
-      format: 'iife',
-      file: 'dist/vue-md-player.iife.js',
-      name: 'vueMdPlayer',
-      globals
-    }
+    output: [
+      {
+        format: 'iife',
+        file: 'dist/vue-md-player.iife.js',
+        name: 'vueMdPlayer',
+        globals
+      },
+      {
+        format: 'iife',
+        file: 'dist/vue-md-player.iife.min.js',
+        name: 'vueMdPlayer',
+        globals,
+        plugins: [terser()]
+      }
+    ]
   }
 ]
