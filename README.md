@@ -1,8 +1,8 @@
 # vue-md-player
 
-[![Build Status](https://travis-ci.org/meyt/vue-md-player.svg?branch=master)](https://travis-ci.org/meyt/vue-md-player)
+![Build Status](https://github.com/meyt/vue-md-player/actions/workflows/main.yaml/badge.svg?branch=master)
 
-Lightweight HTML5 video and audio player component for vuejs.
+Lightweight HTML5 video and audio player component for Vue@2.
 
 [Demo](https://meyt.github.io/vue-md-player)
 
@@ -26,12 +26,11 @@ npm install --save vue-md-player
 ## Usage:
 
 ```vue
-<template lang="pug">
-  div
-    audio-player
-      source(src="http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3")
-    video-player
-      source(src="https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_10mb.mp4" type="video/mp4")
+<template>
+  <div>
+    <audio-player src="./audio.mp3" />
+    <video-player src="./video.mp4" />
+  </div>
 </template>
 
 <script>
