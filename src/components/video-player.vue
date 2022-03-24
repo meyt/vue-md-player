@@ -30,7 +30,7 @@
     <preloader v-if="isInProgress" />
 
     <!-- Control Bar -->
-    <div :class="{'control-bar': true, 'visible': controlbar || paused}" @click.prevent>
+    <div :class="{'control-bar': true, 'visible': controlbar || paused}" @click.stop>
       <scrubber
         v-model="current"
         :min="0"
