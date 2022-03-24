@@ -45,6 +45,7 @@ import { secondsToTime } from '../helper'
 import '../assets/style.scss'
 
 export default {
+  name: 'AudioPlayer',
   mixins: [mediaMixin],
   components: {
     playIcon,
