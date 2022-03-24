@@ -1,5 +1,5 @@
 <template>
-  <div class="vuemdplayer audio">
+  <div :class="classes">
     <div class="player">
       <audio ref="media">
         <slot v-if="canLoad" />
@@ -54,6 +54,12 @@ export default {
     volumeOffIcon,
     scrubber
   },
+  props: {
+    light: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       controlbar: false
@@ -65,9 +71,13 @@ export default {
     },
     currentTime () {
       return secondsToTime(this.current).join(':')
+    },
+    classes () {
+      return {
+        'vuemdplayer audio': true,
+        'light': this.light
+      }
     }
-  },
-  methods: {
   }
 }
 </script>
