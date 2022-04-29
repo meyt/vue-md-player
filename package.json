@@ -1,6 +1,6 @@
 {
   "name": "vue-md-player",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Lightweight HTML5 video and audio player component for vuejs",
   "scripts": {
     "dev": "vite --config demo/vite.config.js",
