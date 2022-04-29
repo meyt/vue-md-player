@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="mediaPlayer"
     @mouseover="onMouseHover"
     @dblclick.prevent="() => doubleClickFullscreen ? toggleFullScreen() : null"
     @click.prevent="unmuteOrTogglePlay"
@@ -176,13 +175,16 @@ export default {
       setTimeout(this.onResize, 0)
     },
     onResize () {
-      this.containerWidth = this.$refs.mediaPlayer.clientWidth
-      this.containerHeight = this.$refs.mediaPlayer.clientHeight
+      const el = this.$el
+      if (!el) return
+      this.containerWidth = el.clientWidth
+      this.containerHeight = el.clientHeight
     },
     onLoadedMetadata () {
-      const m = this.$refs.media
-      this.videoWidth = m.videoWidth
-      this.videoHeight = m.videoHeight
+      const mediaEl = this.$refs.media
+      if (!mediaEl) return
+      this.videoWidth = mediaEl.videoWidth
+      this.videoHeight = mediaEl.videoHeight
     },
     onMouseHover () {
       this.controlbar = true
@@ -205,7 +207,7 @@ export default {
       setTimeout(this.onResize, 0)
     },
     enterFullScreen () {
-      const el = this.$refs.mediaPlayer
+      const el = this.$el
       if (el.requestFullscreen) {
         el.requestFullscreen()
       } else if (el.mozRequestFullScreen) {
