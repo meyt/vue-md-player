@@ -8,7 +8,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'lib/index.js'),
       name: 'VueMdPlayer',
-      fileName: 'vue-md-player'
+      fileName: 'vue-md-player',
+      formats: ['es', 'cjs', 'umd', 'iife']
     },
     rollupOptions: {
       external: ['vue'],
