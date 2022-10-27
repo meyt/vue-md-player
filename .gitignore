@@ -5,7 +5,4 @@ node_modules
 npm-debug.log
 
 dist/*
-.vscode
-.idea
-practice
-*.sublime-*
+demo-dist/*

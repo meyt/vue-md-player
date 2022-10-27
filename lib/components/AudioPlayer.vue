@@ -18,9 +18,9 @@
       />
       <div class="layout">
         <button class="player-btn" icon large @click="unmuteAndTogglePlay()">
-          <pause-icon v-if="playing"/>
-          <replay-icon v-else-if="ended"/>
-          <play-icon v-else />
+          <icon v-if="playing" :value="pauseIcon" />
+          <icon v-else-if="ended" :value="replayIcon"/>
+          <icon v-else :value="playIcon" />
         </button>
         <div class="spacer" />
         <div class="flex times">
@@ -35,31 +35,44 @@
 
 <script>
 import mediaMixin from '../mixin'
-import scrubber from './scrubber.vue'
-import playIcon from '../assets/icons/play.svg'
-import pauseIcon from '../assets/icons/pause.svg'
-import replayIcon from '../assets/icons/replay.svg'
-import volumeUpIcon from '../assets/icons/volume-up.svg'
-import volumeOffIcon from '../assets/icons/volume-off.svg'
-import { secondsToTime } from '../helper'
-import '../assets/style.scss'
+import Scrubber from './Scrubber.vue'
+import Icon from './Icon.vue'
+import { playIcon, pauseIcon, replayIcon, volumeOffIcon, volumeOnIcon } from '../icons'
+import { secondsToTime } from '../helpers'
+import '../style.scss'
 
 export default {
   name: 'AudioPlayer',
   mixins: [mediaMixin],
   components: {
-    playIcon,
-    pauseIcon,
-    replayIcon,
-    volumeUpIcon,
-    volumeOffIcon,
-    scrubber
+    Icon,
+    Scrubber
   },
   props: {
     light: {
       type: Boolean,
       default: false
-    }
+    },
+    playIcon: {
+      type: String,
+      default: playIcon
+    },
+    pauseIcon: {
+      type: String,
+      default: pauseIcon
+    },
+    replayIcon: {
+      type: String,
+      default: replayIcon
+    },
+    volumeOffIcon: {
+      type: String,
+      default: volumeOffIcon
+    },
+    volumeOnIcon: {
+      type: String,
+      default: volumeOnIcon
+    },
   },
   data () {
     return {

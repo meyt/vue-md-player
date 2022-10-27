@@ -6,11 +6,11 @@ export default {
   </audio-player>
 </template>
 <script>
-import { audioPlayer } from 'vue-md-player'
-import 'vue-md-player/dist/vue-md-player.css'
+import { AudioPlayer } from 'vue-md-player'
+import 'vue-md-player/dist/style.css'
 export default {
   components: {
-    audioPlayer
+    AudioPlayer
   }
 }
 </script>`,
@@ -25,11 +25,11 @@ export default {
   </video-player>
 </template>
 <script>
-import { videoPlayer } from 'vue-md-player'
-import 'vue-md-player/dist/vue-md-player.css'
+import { VideoPlayer } from 'vue-md-player'
+import 'vue-md-player/dist/style.css'
 export default {
   components: {
-    videoPlayer
+    VideoPlayer
   }
 }
 </script>`,

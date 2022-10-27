@@ -39,9 +39,9 @@
       />
       <div class="layout">
         <button class="player-btn" @click="unmuteAndTogglePlay()">
-          <pause-icon v-if="playing"/>
-          <replay-icon v-else-if="ended"/>
-          <play-icon v-else/>
+          <icon v-if="playing" :value="pauseIcon"/>
+          <icon v-else-if="ended" :value="replayIcon"/>
+          <icon v-else :value="playIcon"/>
         </button>
         <div class="spacer" />
         <div class="flex times">
@@ -50,12 +50,12 @@
           <span v-text="durationTime" />
         </div>
         <button class="player-btn" @click="toggleMute()">
-          <volume-off-icon v-if="muted"/>
-          <volume-up-icon v-else/>
+          <icon v-if="muted" :value="volumeOffIcon"/>
+          <icon v-else :value="volumeOnIcon"/>
         </button>
         <button class="player-btn" @click="toggleFullScreen()">
-          <fullscreen-exit-icon v-if="fullscreen"/>
-          <fullscreen-icon v-else/>
+          <icon v-if="fullscreen" :value="fullscreenExitIcon"/>
+          <icon fullscreen-icon v-else :value="fullscreenIcon"/>
         </button>
       </div>
   </div>
@@ -63,18 +63,13 @@
 </template>
 
 <script>
-import playIcon from '../assets/icons/play.svg'
-import pauseIcon from '../assets/icons/pause.svg'
-import replayIcon from '../assets/icons/replay.svg'
-import volumeUpIcon from '../assets/icons/volume-up.svg'
-import volumeOffIcon from '../assets/icons/volume-off.svg'
-import fullscreenIcon from '../assets/icons/fullscreen.svg'
-import fullscreenExitIcon from '../assets/icons/fullscreen-exit.svg'
-import scrubber from './scrubber.vue'
-import preloader from './preloader.vue'
+import Icon from './Icon.vue'
+import { playIcon, pauseIcon, replayIcon, volumeOffIcon, volumeOnIcon, fullscreenIcon, fullscreenExitIcon } from '../icons'
+import Scrubber from './Scrubber.vue'
+import Preloader from './Preloader.vue'
 import mediaMixin from '../mixin'
-import { secondsToTime, fitAndCenterObject } from '../helper'
-import '../assets/style.scss'
+import { secondsToTime, fitAndCenterObject } from '../helpers'
+import '../style.scss'
 
 export default {
   name: 'VideoPlayer',
@@ -95,18 +90,40 @@ export default {
     contain: {
       type: Boolean,
       default: false
-    }
+    },
+    playIcon: {
+      type: String,
+      default: playIcon
+    },
+    pauseIcon: {
+      type: String,
+      default: pauseIcon
+    },
+    replayIcon: {
+      type: String,
+      default: replayIcon
+    },
+    volumeOffIcon: {
+      type: String,
+      default: volumeOffIcon
+    },
+    volumeOnIcon: {
+      type: String,
+      default: volumeOnIcon
+    },
+    fullscreenIcon: {
+      type: String,
+      default: fullscreenIcon
+    },
+    fullscreenExitIcon: {
+      type: String,
+      default: fullscreenExitIcon
+    },
   },
   components: {
-    playIcon,
-    pauseIcon,
-    replayIcon,
-    volumeUpIcon,
-    volumeOffIcon,
-    fullscreenIcon,
-    fullscreenExitIcon,
-    preloader,
-    scrubber
+    Icon,
+    Preloader,
+    Scrubber
   },
   data () {
     return {

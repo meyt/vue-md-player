@@ -67,18 +67,9 @@
     border-width: 0;
     background: transparent;
     transition: all 0.2s;
+    color: #fff;
     &:hover {
       background-color: rgba(125,125,125,0.3);
-    }
-    svg {
-      display: block;
-      fill: #fff;
-      height: 24px;
-      pointer-events: none;
-      width: 24px;
-      overflow: hidden;
-      box-sizing: inherit;
-      transform: scale(1);
     }
   }
   .overlay {
@@ -118,13 +109,11 @@
   &.light {
     background-color: #fff;
     color: #000;
+    .player-btn {
+      color: #000;
+    }
     .control-bar {
       background: linear-gradient(rgba(0,0,0,0), rgba(255,255,255,0.8));
-    }
-    .player-btn {
-      svg {
-        fill: #000;
-      }
     }
   }
 }

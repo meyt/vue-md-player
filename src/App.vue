@@ -1,3 +1,48 @@
+<script>
+import { VideoPlayer, AudioPlayer } from '../lib'
+import examples from './examples'
+import videoSrc from './assets/example.mp4'
+import audioSrc from './assets/example.mp3'
+import watermarkSrc from './assets/watermark.png'
+
+export default {
+  components: {
+    VideoPlayer,
+    AudioPlayer
+  },
+  data () {
+    return {
+      videoSrc,
+      audioSrc,
+      watermarkSrc,
+      examples
+    }
+  },
+  mounted () {
+    setTimeout(function () {
+      document.querySelectorAll('textarea').forEach(function (el) {
+        el.style.height = '1px'
+        el.style.height = el.scrollHeight + 'px'
+      })
+    }, 0)
+  },
+  methods: {
+    audioSnippet () {
+      return `<audio-player>
+  <source src="${this.audioSrc}" />
+</audio-player>
+import { AudioPlayer } from 'vue-md-player'
+import 'vue-md-player/dist/style.css'
+export default {
+  components: {
+    AudioPlayer
+  }
+}`
+    }
+  }
+}
+</script>
+
 <template>
   <div class="container">
     <h1>
@@ -69,52 +114,9 @@
       </div>
     </div>
   </div>
-</template>
-<script>
-import { videoPlayer, audioPlayer } from '../../src/index'
-import examples from './examples'
-import '../../dist/vue-md-player.css'
-import videoSrc from './assets/example.mp4'
-import audioSrc from './assets/example.mp3'
-import watermarkSrc from './assets/watermark.png'
 
-export default {
-  components: {
-    videoPlayer,
-    audioPlayer
-  },
-  data () {
-    return {
-      videoSrc,
-      audioSrc,
-      watermarkSrc,
-      examples
-    }
-  },
-  mounted () {
-    setTimeout(function () {
-      document.querySelectorAll('textarea').forEach(function (el) {
-        el.style.height = '1px'
-        el.style.height = el.scrollHeight + 'px'
-      })
-    }, 0)
-  },
-  methods: {
-    audioSnippet () {
-      return `<audio-player>
-  <source src="${this.audioSrc}" />
-</audio-player>
-import { audioPlayer } from 'vue-md-player'
-import 'vue-md-player/dist/vue-md-player.css'
-export default {
-  components: {
-    audioPlayer
-  }
-}`
-    }
-  }
-}
-</script>
+</template>
+
 <style>
   html, body{
     margin: 0;

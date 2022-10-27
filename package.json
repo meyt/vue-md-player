@@ -1,16 +1,7 @@
 {
   "name": "vue-md-player",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Lightweight HTML5 video and audio player component for vuejs",
-  "scripts": {
-    "dev": "vite --config demo/vite.config.js",
-    "build-demo": "vite build --config demo/vite.config.js --base=/vue-md-player/ ",
-    "build": "rm -rf ./dist && rollup -c;",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "files": [
-    "dist/*"
-  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:meyt/vue-md-player.git"
@@ -27,32 +18,29 @@
     "url": "https://github.com/meyt/vue-md-player/issues"
   },
   "homepage": "https://github.com/meyt/vue-md-player#readme",
-  "main": "dist/vue-md-player.cjs.js",
-  "module": "dist/vue-md-player.js",
-  "unpkg": "dist/vue-md-player.iife.js",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/vue-md-player.umd.cjs",
+  "module": "./dist/vue-md-player.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-md-player.js",
+      "require": "./dist/vue-md-player.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build-demo": "vite build --config vite.demo.config.js --base=/vue-md-player/"
+  },
   "dependencies": {},
   "peerDependencies": {
-    "vue": "^2.6.14"
+    "vue": "^3.2.41"
   },
   "devDependencies": {
-    "core-js": "^2.6.5",
-    "node-sass": "^7.0.1",
-    "rollup": "^1.15.6",
-    "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-css-only": "^1.0.0",
-    "rollup-plugin-filesize": "^6.1.1",
-    "rollup-plugin-node-resolve": "^5.0.3",
-    "rollup-plugin-scss": "^3.0.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-vue": "^5.0.0",
-    "rollup-plugin-vue-inline-svg": "^1.0.1",
-    "rollup-plugin-vue-svg": "^0.1.1",
-    "sass": "^1.49.9",
-    "svgo": "^2.8.0",
-    "vite": "^2.8.0",
-    "vite-plugin-vue2": "^1.9.3",
-    "vue": "^2.6.14",
-    "vue-template-compiler": "^2.6.14",
-    "vue-template-es2015-compiler": "^1.9.1"
+    "@vitejs/plugin-vue": "^3.2.0",
+    "vue": "^3.2.41",
+    "vite": "^3.2.0",
+    "sass": "^1.55.0"
   }
 }
