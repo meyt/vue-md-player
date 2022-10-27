@@ -31,10 +31,10 @@
     <!-- Control Bar -->
     <div :class="{'control-bar': true, 'visible': controlbar || paused}" @click.stop>
       <scrubber
-        v-model="current"
+        :value="current"
         :min="0"
         :max="duration"
-        @input="seek(current)"
+        @input="seek"
         :loading="isInProgress"
       />
       <div class="layout">
