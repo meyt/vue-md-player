@@ -32,6 +32,17 @@
       opacity: 1;
     }
   }
+  &.compact {
+    min-height: 40px;
+    .control-bar {
+      height: 40px;
+      padding: 0;
+    }
+    .scrubber {
+      margin-top: -8px;
+      flex-grow: 1;
+    }
+  }
   .times {
     font-size: 13px;
     font-weight: 400;
@@ -42,6 +53,9 @@
     text-align: right;
     margin-right: 16px;
     padding: 10px 0;
+  }
+  &.compact .times {
+    flex-grow:0;
   }
   .layout {
     display: flex;
