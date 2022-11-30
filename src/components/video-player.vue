@@ -31,6 +31,7 @@
     <!-- Control Bar -->
     <div :class="{'control-bar': true, 'visible': controlbar || paused}" @click.stop>
       <scrubber
+        v-if="!compact"
         v-model="current"
         :min="0"
         :max="duration"
@@ -43,7 +44,15 @@
           <replay-icon v-else-if="ended"/>
           <play-icon v-else/>
         </button>
-        <div class="spacer" />
+        <div class="spacer" v-if="!compact" />
+        <scrubber
+            v-if="compact"
+            v-model="current"
+            :min="0"
+            :max="duration"
+            @input="seek(current)"
+            :loading="isInProgress"
+        />
         <div class="flex times">
           <span v-text="currentTime" />
           <span>&nbsp;/&nbsp;</span>
@@ -95,7 +104,11 @@ export default {
     contain: {
       type: Boolean,
       default: false
-    }
+    },
+    compact: {
+      type: Boolean,
+      default: false
+    },
   },
   components: {
     playIcon,
@@ -123,7 +136,8 @@ export default {
       return {
         'vuemdplayer video': true,
         'fullscreen': this.fullscreen,
-        'contain': this.fullscreen || this.contain
+        'contain': this.fullscreen || this.contain,
+        'compact': this.compact,
       }
     },
     styles () {

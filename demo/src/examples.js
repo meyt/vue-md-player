@@ -14,6 +14,20 @@ export default {
   }
 }
 </script>`,
+    compact: `<template>
+  <audio-player>
+    <source compact src="./example.mp3" />
+  </audio-player>
+</template>
+<script>
+import { audioPlayer } from 'vue-md-player'
+import 'vue-md-player/dist/vue-md-player.css'
+export default {
+  components: {
+    audioPlayer
+  }
+}
+</script>`,
     light: `<template>
   <audio-player src="./example.mp3" light />
 </template>`

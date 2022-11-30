@@ -13,6 +13,12 @@
         <audio-player :src="audioSrc" />
       </div>
 
+      <h3>Compact</h3>
+      <pre v-text="examples.audio.compact"/>
+      <div class="audio-container">
+        <audio-player compact :src="audioSrc" />
+      </div>
+
       <h3>Light mode</h3>
       <pre v-text="examples.audio.light"/>
       <div class="audio-container">
@@ -25,6 +31,16 @@
       <pre v-text="examples.video.basic"/>
       <div class="video-container">
         <video-player :src="videoSrc" />
+      </div>
+
+      <h3>Compact</h3>
+      <pre v-pre>
+        &lt;video-player compact&gt;
+          ...
+        &lt;/video-player&gt;
+      </pre>
+      <div class="video-container">
+        <video-player compact :src="videoSrc" />
       </div>
 
       <h3>Contained</h3>

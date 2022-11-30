@@ -10,6 +10,7 @@
     <!-- Control Bar-->
     <div class="control-bar visible">
       <scrubber
+          v-if="!compact"
         v-model="current"
         :min="0"
         :max="duration"
@@ -22,7 +23,15 @@
           <replay-icon v-else-if="ended"/>
           <play-icon v-else />
         </button>
-        <div class="spacer" />
+        <div v-if="!compact" class="spacer" />
+        <scrubber
+            v-if="compact"
+            v-model="current"
+            :min="0"
+            :max="duration"
+            @input="seek(current)"
+            :loading="isInProgress"
+        />
         <div class="flex times">
           <span v-text="currentTime"/>
           <span>&nbsp;/&nbsp;</span>
@@ -59,6 +68,10 @@ export default {
     light: {
       type: Boolean,
       default: false
+    },
+    compact: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -76,7 +89,8 @@ export default {
     classes () {
       return {
         'vuemdplayer audio': true,
-        'light': this.light
+        'light': this.light,
+        'compact': this.compact,
       }
     }
   }
