@@ -7,6 +7,8 @@ Lightweight HTML5 video and audio player component for Vue.
 
 [Demo](https://meyt.github.io/vue-md-player) - [Codepen](https://codepen.io/barname_nevis/pen/rNKapaY)
 
+[README for Vue 2 users](https://github.com/meyt/vue-md-player/tree/v1)
+
 ## Screenshots
 
 ### Video Player
@@ -18,11 +20,6 @@ Lightweight HTML5 video and audio player component for Vue.
 ![audio player](https://github.com/meyt/vue-md-player/raw/master/stuff/audio-player-screenshot.png?raw=true)
 
 ## Install
-
-Vue 2
-```
-npm install --save vue-md-player@1
-```
 
 Vue 3
 ```
