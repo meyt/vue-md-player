@@ -26,6 +26,10 @@
     ".": {
       "import": "./dist/vue-md-player.js",
       "require": "./dist/vue-md-player.umd.cjs"
+    },
+    "./dist/": {
+      "import": "./dist/",
+      "require": "./dist/"
     }
   },
   "scripts": {
