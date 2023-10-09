@@ -19,7 +19,7 @@ Lightweight HTML5 video and audio player component for Vue@2.
 ## Install
 
 ```
-npm install --save vue-md-player
+npm install --save vue-md-player@1
 ```
 
 
