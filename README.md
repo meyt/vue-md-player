@@ -1,6 +1,7 @@
 # vue-md-player
 
-![Build Status](https://github.com/meyt/vue-md-player/actions/workflows/main.yaml/badge.svg?branch=master)
+[![Build Status](https://github.com/meyt/vue-md-player/actions/workflows/main.yaml/badge.svg?branch=master)](https://github.com/meyt/vue-md-player/actions)
+[![View this project on NPM](https://img.shields.io/npm/v/vue-md-player.svg)](https://www.npmjs.com/package/vue-md-player)
 
 Lightweight HTML5 video and audio player component for Vue.
 
