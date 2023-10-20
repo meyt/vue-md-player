@@ -4,6 +4,7 @@ import examples from './examples'
 import videoSrc from './assets/example.mp4'
 import audioSrc from './assets/example.mp3'
 import watermarkSrc from './assets/watermark.png'
+import posterSrc from './assets/poster.jpg'
 
 export default {
   components: {
@@ -15,6 +16,7 @@ export default {
       videoSrc,
       audioSrc,
       watermarkSrc,
+      posterSrc,
       examples
     }
   },
@@ -112,6 +114,13 @@ export default {
           </template>
         </video-player>
       </div>
+
+      <h3>Poster</h3>
+      <pre v-text="examples.video.poster"/>
+      <div class="video-container">
+        <video-player :src="videoSrc" :poster="posterSrc" />
+      </div>
+
     </div>
   </div>
 

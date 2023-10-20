@@ -1,7 +1,14 @@
 <template>
   <div :class="classes">
     <div class="player">
-      <audio ref="media">
+      <audio
+        ref="media"
+        :preload="preload"
+        :loop="loop"
+        :muted="muted"
+        :autoplay="autoplay"
+        :crossorigin="crossorigin"
+      >
         <source v-if="src" :src="src" :type="srcType"/>
         <slot />
       </audio>

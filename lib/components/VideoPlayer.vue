@@ -3,7 +3,6 @@
     @mouseover="onMouseHover"
     @dblclick.prevent="() => doubleClickFullscreen ? toggleFullScreen() : null"
     @click.prevent="unmuteOrTogglePlay"
-    :preload="preload"
     :class="classes"
     :style="styles"
   >
@@ -13,6 +12,12 @@
         ref="media"
         :width="width"
         :height="height"
+        :preload="preload"
+        :loop="loop"
+        :muted="muted"
+        :autoplay="autoplay"
+        :crossorigin="crossorigin"
+        :playsinline="playsinline"
         @loadedmetadata="onLoadedMetadata"
       >
         <source v-if="src" :src="src" :type="srcType"/>
@@ -24,6 +29,9 @@
     <div v-if="$slots.overlay" class="overlay">
       <slot name="overlay" />
     </div>
+
+    <!-- Poster -->
+    <div v-if="poster" class="overlay poster"></div>
 
     <!-- Pre-loader -->
     <preloader v-if="isInProgress" />
@@ -50,7 +58,7 @@
           <span v-text="durationTime" />
         </div>
         <button class="player-btn" @click="toggleMute()">
-          <icon v-if="muted" :value="volumeOffIcon"/>
+          <icon v-if="_muted" :value="volumeOffIcon"/>
           <icon v-else :value="volumeOnIcon"/>
         </button>
         <button class="player-btn" @click="toggleFullScreen()">
@@ -84,6 +92,18 @@ export default {
       default: null
     },
     doubleClickFullscreen: {
+      type: Boolean,
+      default: false
+    },
+    contain: {
+      type: Boolean,
+      default: false
+    },
+    poster: {
+      type: String,
+      default: null
+    },
+    playsinline: {
       type: Boolean,
       default: false
     },
@@ -140,7 +160,9 @@ export default {
       return {
         'vuemdplayer video': true,
         'fullscreen': this.fullscreen,
-        'contain': this.fullscreen || this.contain
+        'contain': this.fullscreen || this.contain,
+        'has-poster': !!this.poster,
+        'first-play': !!this.firstPlay
       }
     },
     styles () {
@@ -160,7 +182,8 @@ export default {
         '--layer-top': y + 'px',
         '--layer-left': x + 'px',
         '--layer-width': w + 'px',
-        '--layer-height': h + 'px'
+        '--layer-height': h + 'px',
+        '--poster': 'url("' + this.poster + '")',
       }
     },
     durationTime () {

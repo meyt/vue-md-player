@@ -69,6 +69,9 @@ export default {
     display: block;
     opacity: 0.7;
   }
-</style>`
+</style>`,
+    poster: `<template>
+    <video-player src="./example.mp4" poster="./poster.jpg" />
+</template>`,
   }
 }
